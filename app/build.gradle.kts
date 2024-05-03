@@ -12,6 +12,9 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":annotation"))
+    ksp(project(":annotation"))
+
     testImplementation(kotlin("test"))
 }
 
