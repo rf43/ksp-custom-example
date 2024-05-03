@@ -65,6 +65,7 @@ class MockingTextProcessor(
      * classes annotated with the @MockingText annotation
      */
     inner class MockingTextVisitor(private val file: OutputStream) : KSVisitorVoid() {
+
         override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
             // Visit the primary constructor of the class
             classDeclaration.primaryConstructor!!.accept(this, data)
@@ -105,10 +106,11 @@ class MockingTextProcessor(
             // Write the extension function to the file
             file.appendText(
                 """
+                
                 fun ${classDeclaration.simpleName.asString()}.mockMe(): ${String::class.simpleName} {
                     val outStr = StringBuilder()
 
-                    str.forEachIndexed { i, char ->
+                    ${mockableParams.first()}.forEachIndexed { i, char ->
                         if (i % 2 == 0) {
                             outStr.append(char.uppercaseChar())
                         } else {
